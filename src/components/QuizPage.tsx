@@ -5,6 +5,7 @@ import { Timer } from './Timer';
 import { ResultDisplay } from './ResultDisplay';
 import { Leaderboard } from './Leaderboard';
 import { XPTracker } from './XPTracker';
+import { APIStatusIndicator } from './APIStatusIndicator';
 import { Brain, Zap, Target, Settings, Users, Home } from 'lucide-react';
 
 export const QuizPage = () => {
@@ -155,12 +156,20 @@ export const QuizPage = () => {
                         key={difficulty}
                         onClick={() => handleStartQuiz(difficulty)}
                         disabled={isLoading}
-                        className={`p-6 rounded-xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+                        className={`p-6 rounded-xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed relative ${
                           selectedDifficulty === difficulty
                             ? 'border-primary bg-primary/10'
                             : 'border-border bg-card hover:border-primary/50'
                         }`}
                       >
+                        {isLoading && selectedDifficulty === difficulty && (
+                          <div className="absolute inset-0 bg-black/50 rounded-xl flex items-center justify-center">
+                            <div className="flex flex-col items-center gap-2">
+                              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                              <span className="text-white text-sm font-medium">Generating Quiz...</span>
+                            </div>
+                          </div>
+                        )}
                         <div className="text-center">
                           <div className="text-4xl mb-3">{config.icon}</div>
                           <h4 className="text-xl font-bold capitalize mb-2">{difficulty}</h4>
@@ -233,6 +242,7 @@ export const QuizPage = () => {
 
             {/* Sidebar */}
             <div className="space-y-6">
+              <APIStatusIndicator />
               <XPTracker />
               {showLeaderboard && <Leaderboard />}
               

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Quiz, Question, QuizResult, User } from '../types/quiz';
 import { generateMockQuiz } from '../data/mockQuizzes';
+import { quizAPI } from '../services/quizAPI';
 import { toast } from 'sonner';
 
 export const useQuiz = () => {
@@ -15,17 +16,15 @@ export const useQuiz = () => {
   const startQuiz = useCallback(async (difficulty: 'easy' | 'medium' | 'hard') => {
     setIsLoading(true);
     try {
-      // In a real app, this would call the backend API
-      // const response = await fetch('/api/quiz', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ difficulty, questionCount: 5 })
-      // });
-      // const quiz = await response.json();
+      console.log(`Starting ${difficulty} quiz with AI generation...`);
       
-      // For now, use mock data
-      const quiz = generateMockQuiz(difficulty, 5);
-      
+      // Use the API service for better error handling and validation
+      const quiz = await quizAPI.generateQuiz({
+        difficulty,
+        questionCount: 5,
+        topics: [] // Can be extended later for specific anime/manga series
+      });
+
       setCurrentQuiz(quiz);
       setCurrentQuestionIndex(0);
       setUserAnswers([]);
@@ -33,10 +32,23 @@ export const useQuiz = () => {
       setTimeRemaining(quiz.questions[0]?.timeLimit || 30);
       setIsQuizActive(true);
       
-      toast.success(`${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} quiz started!`);
+      toast.success(`🎌 AI-generated ${difficulty} quiz ready! Let's test your knowledge!`);
     } catch (error) {
-      console.error('Failed to start quiz:', error);
-      toast.error('Failed to start quiz. Please try again.');
+      console.error('AI quiz generation failed:', error);
+      
+      // Fallback to mock data if API fails
+      console.log('Falling back to mock quiz data...');
+      const mockQuiz = generateMockQuiz(difficulty, 5);
+      
+      setCurrentQuiz(mockQuiz);
+      setCurrentQuestionIndex(0);
+      setUserAnswers([]);
+      setQuizResult(null);
+      setTimeRemaining(mockQuiz.questions[0]?.timeLimit || 30);
+      setIsQuizActive(true);
+      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      toast.warning(`🔄 Using offline mode: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
