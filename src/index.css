@@ -2,104 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Anime & Manga Quiz Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Anime-inspired color palette */
+    --background: 240 15% 4%;
+    --foreground: 300 20% 95%;
+    
+    /* Vibrant anime colors */
+    --primary: 280 100% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 300 100% 75%;
+    
+    --secondary: 200 100% 60%;
+    --secondary-foreground: 240 15% 4%;
+    
+    --accent: 45 100% 65%;
+    --accent-foreground: 240 15% 4%;
+    
+    --success: 120 100% 60%;
+    --success-foreground: 240 15% 4%;
+    
+    --warning: 30 100% 65%;
+    --warning-foreground: 240 15% 4%;
+    
+    --danger: 0 100% 65%;
+    --danger-foreground: 0 0% 100%;
+    
+    /* Card and surface colors */
+    --card: 240 15% 8%;
+    --card-foreground: 300 20% 95%;
+    --card-border: 280 30% 15%;
+    
+    --muted: 240 15% 12%;
+    --muted-foreground: 300 10% 70%;
+    
+    /* Interactive elements */
+    --border: 280 30% 15%;
+    --input: 240 15% 12%;
+    --ring: 280 100% 65%;
+    
+    --popover: 240 15% 8%;
+    --popover-foreground: 300 20% 95%;
+    
+    --destructive: 0 100% 65%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --radius: 0.75rem;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-
-@layer base {
+  
   * {
     @apply border-border;
   }
-
+  
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  /* Custom animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3); }
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+}
+
+@layer components {
+  /* Button variants */
+  .btn-anime {
+    @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-primary);
+  }
+  
+  .btn-anime:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-primary);
+  }
+  
+  .btn-secondary-anime {
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300;
+    background: var(--gradient-secondary);
+    color: hsl(var(--secondary-foreground));
+  }
+  
+  .btn-secondary-anime:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px hsl(var(--secondary) / 0.4);
+  }
+  
+  /* Card styles */
+  .card-anime {
+    @apply rounded-2xl border border-border p-6 transition-all duration-300;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+  }
+  
+  .card-anime:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-primary);
+  }
+  
+  /* Quiz specific styles */
+  .quiz-option {
+    @apply p-4 rounded-xl border-2 border-border bg-card cursor-pointer transition-all duration-300;
+  }
+  
+  .quiz-option:hover {
+    @apply border-primary bg-primary/10;
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.3);
+  }
+  
+  .quiz-option.selected {
+    @apply border-primary bg-primary/20;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+  }
+  
+  .quiz-option.correct {
+    @apply border-success bg-success/20;
+    box-shadow: 0 0 20px hsl(var(--success) / 0.4);
+  }
+  
+  .quiz-option.incorrect {
+    @apply border-danger bg-danger/20;
+    box-shadow: 0 0 20px hsl(var(--danger) / 0.4);
   }
 }
