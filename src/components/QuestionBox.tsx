@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Question } from '../types/quiz';
 import { CheckCircle, XCircle, HelpCircle } from 'lucide-react';
 
@@ -23,6 +23,12 @@ export const QuestionBox = ({
 }: QuestionBoxProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | number>('');
   const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  // Reset state when question changes
+  useEffect(() => {
+    setSelectedAnswer('');
+    setHasSubmitted(false);
+  }, [question.id]);
 
   const handleSubmit = () => {
     if (selectedAnswer !== '' && !hasSubmitted) {
