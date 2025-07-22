@@ -142,28 +142,248 @@ export const mockQuestions: Question[] = [
     correctAnswer: 0,
     explanation: "Alphonse Elric is Edward's younger brother who lost his body in a failed alchemical experiment.",
     timeLimit: 30
+  },
+  // New question types and variations
+  {
+    id: '16',
+    type: 'ranking',
+    difficulty: 'hard',
+    question: "Rank these anime by their release year (earliest to latest):",
+    options: ['Dragon Ball', 'Naruto', 'Attack on Titan', 'Demon Slayer'],
+    correctAnswer: [0, 1, 2, 3], // Dragon Ball (1986), Naruto (2002), AoT (2013), Demon Slayer (2019)
+    explanation: "Dragon Ball started in 1986, Naruto in 2002, Attack on Titan in 2013, and Demon Slayer in 2019.",
+    timeLimit: 45
+  },
+  {
+    id: '17',
+    type: 'multiple-select',
+    difficulty: 'medium',
+    question: "Which of these are Studio Ghibli films? (Select all that apply)",
+    options: ['Spirited Away', 'Your Name', 'Princess Mononoke', 'Akira', 'My Neighbor Totoro'],
+    correctAnswer: [0, 2, 4], // Spirited Away, Princess Mononoke, My Neighbor Totoro
+    explanation: "Studio Ghibli created Spirited Away, Princess Mononoke, and My Neighbor Totoro. Your Name was by CoMix Wave Films, and Akira by TMS Entertainment.",
+    timeLimit: 40
+  },
+  {
+    id: '18',
+    type: 'number',
+    difficulty: 'hard',
+    question: "How many Dragon Balls are needed to summon Shenron?",
+    correctAnswer: 7,
+    explanation: "Seven Dragon Balls are required to summon the eternal dragon Shenron.",
+    timeLimit: 25
+  },
+  {
+    id: '19',
+    type: 'mcq',
+    difficulty: 'easy',
+    question: "What color is Luffy's straw hat in One Piece?",
+    options: ['Brown', 'Yellow', 'Blue', 'Red'],
+    correctAnswer: 1,
+    explanation: "Luffy's iconic straw hat is yellow/blonde in color.",
+    timeLimit: 20
+  },
+  {
+    id: '20',
+    type: 'fill-blank',
+    difficulty: 'medium',
+    question: "In Tokyo Ghoul, the main character Ken Kaneki becomes a half-_____.",
+    correctAnswer: "ghoul",
+    explanation: "Ken Kaneki becomes a half-ghoul after an encounter with Rize Kamishiro.",
+    timeLimit: 30
+  },
+  {
+    id: '21',
+    type: 'true-false',
+    difficulty: 'hard',
+    question: "In Neon Genesis Evangelion, Shinji Ikari pilots EVA Unit-01.",
+    correctAnswer: 1,
+    explanation: "True! Shinji Ikari is the pilot of Evangelion Unit-01.",
+    timeLimit: 25
+  },
+  {
+    id: '22',
+    type: 'mcq',
+    difficulty: 'medium',
+    question: "What is the name of the notebook in Death Note?",
+    options: ['Death Book', 'Kill Note', 'Death Note', 'Murder Diary'],
+    correctAnswer: 2,
+    explanation: "The supernatural notebook is called the Death Note.",
+    timeLimit: 20
+  },
+  {
+    id: '23',
+    type: 'multiple-select',
+    difficulty: 'hard',
+    question: "Which of these characters can use the Sharingan? (Select all that apply)",
+    options: ['Sasuke Uchiha', 'Naruto Uzumaki', 'Itachi Uchiha', 'Sakura Haruno', 'Kakashi Hatake'],
+    correctAnswer: [0, 2, 4], // Sasuke, Itachi, Kakashi
+    explanation: "Sasuke and Itachi are Uchiha clan members with natural Sharingan, while Kakashi received his from Obito.",
+    timeLimit: 35
+  },
+  {
+    id: '24',
+    type: 'fill-blank',
+    difficulty: 'easy',
+    question: "In Pokémon, Pikachu is an _____ type Pokémon.",
+    correctAnswer: "electric",
+    explanation: "Pikachu is an Electric-type Pokémon known for its lightning attacks.",
+    timeLimit: 20
+  },
+  {
+    id: '25',
+    type: 'mcq',
+    difficulty: 'hard',
+    question: "In Hunter x Hunter, what is Gon's father's name?",
+    options: ['Ging Freecss', 'Silva Zoldyck', 'Isaac Netero', 'Leorio Paradinight'],
+    correctAnswer: 0,
+    explanation: "Ging Freecss is Gon's father and a legendary Hunter.",
+    timeLimit: 30
+  },
+  {
+    id: '26',
+    type: 'number',
+    difficulty: 'medium',
+    question: "How many Titan Shifters are there in Attack on Titan?",
+    correctAnswer: 9,
+    explanation: "There are nine Titan Shifters known as the Nine Titans in Attack on Titan.",
+    timeLimit: 30
+  },
+  {
+    id: '27',
+    type: 'true-false',
+    difficulty: 'easy',
+    question: "In Sailor Moon, Usagi Tsukino transforms into Sailor Moon.",
+    correctAnswer: 1,
+    explanation: "True! Usagi Tsukino is the civilian identity of Sailor Moon.",
+    timeLimit: 20
+  },
+  {
+    id: '28',
+    type: 'mcq',
+    difficulty: 'medium',
+    question: "What is the name of the virtual reality game in Sword Art Online?",
+    options: ['ALfheim Online', 'Sword Art Online', 'Gun Gale Online', 'Underworld'],
+    correctAnswer: 1,
+    explanation: "The first virtual reality MMORPG that trapped players was called Sword Art Online.",
+    timeLimit: 25
+  },
+  {
+    id: '29',
+    type: 'fill-blank',
+    difficulty: 'hard',
+    question: "In Code Geass, Lelouch's Geass power allows him to command absolute _____.",
+    correctAnswer: "obedience",
+    explanation: "Lelouch's Geass gives him the power of absolute obedience over others.",
+    timeLimit: 35
+  },
+  {
+    id: '30',
+    type: 'ranking',
+    difficulty: 'medium',
+    question: "Rank these Dragon Ball characters by power level (weakest to strongest):",
+    options: ['Krillin', 'Vegeta', 'Goku', 'Yamcha'],
+    correctAnswer: [3, 0, 1, 2], // Yamcha, Krillin, Vegeta, Goku
+    explanation: "Generally ranked: Yamcha (weakest), Krillin, Vegeta, Goku (strongest).",
+    timeLimit: 40
+  },
+  // Adding more diverse anime series
+  {
+    id: '31',
+    type: 'mcq',
+    difficulty: 'easy',
+    question: "What is the main character's name in Mob Psycho 100?",
+    options: ['Ritsu Kageyama', 'Shigeo Kageyama', 'Teruki Hanazawa', 'Arataka Reigen'],
+    correctAnswer: 1,
+    explanation: "Shigeo 'Mob' Kageyama is the main character with powerful psychic abilities.",
+    timeLimit: 25
+  },
+  {
+    id: '32',
+    type: 'true-false',
+    difficulty: 'medium',
+    question: "In Cowboy Bebop, Spike Spiegel is a bounty hunter.",
+    correctAnswer: 1,
+    explanation: "True! Spike is a bounty hunter aboard the spaceship Bebop.",
+    timeLimit: 25
+  },
+  {
+    id: '33',
+    type: 'multiple-select',
+    difficulty: 'hard',
+    question: "Which of these are members of the Straw Hat Pirates? (Select all that apply)",
+    options: ['Monkey D. Luffy', 'Trafalgar Law', 'Roronoa Zoro', 'Portgas D. Ace', 'Nami'],
+    correctAnswer: [0, 2, 4], // Luffy, Zoro, Nami
+    explanation: "Luffy (captain), Zoro (swordsman), and Nami (navigator) are Straw Hat crew members. Law leads his own crew, and Ace was in Whitebeard's crew.",
+    timeLimit: 35
+  },
+  {
+    id: '34',
+    type: 'fill-blank',
+    difficulty: 'medium',
+    question: "In Bleach, Soul Reapers use weapons called _____.",
+    correctAnswer: "zanpakuto",
+    explanation: "Zanpakuto are the spiritual weapons wielded by Soul Reapers in Bleach.",
+    timeLimit: 30
+  },
+  {
+    id: '35',
+    type: 'number',
+    difficulty: 'easy',
+    question: "How many episodes does the original Dragon Ball anime have?",
+    correctAnswer: 153,
+    explanation: "The original Dragon Ball anime ran for 153 episodes from 1986 to 1989.",
+    timeLimit: 30
   }
 ];
 
-// Track used questions to prevent repetition
-const usedQuestionIds = new Set<string>();
+// Track used questions to prevent repetition across sessions
+const getUsedQuestionIds = (): Set<string> => {
+  const stored = localStorage.getItem('usedQuestionIds');
+  return stored ? new Set(JSON.parse(stored)) : new Set();
+};
+
+const saveUsedQuestionIds = (usedIds: Set<string>) => {
+  localStorage.setItem('usedQuestionIds', JSON.stringify(Array.from(usedIds)));
+};
 
 export const generateMockQuiz = (difficulty: 'easy' | 'medium' | 'hard', count: number = 5): Quiz => {
-  const filteredQuestions = mockQuestions.filter(q => q.difficulty === difficulty);
+  const usedQuestionIds = getUsedQuestionIds();
   
-  // Create a pool of available questions (excluding recently used ones)
-  let availableQuestions = filteredQuestions.filter(q => !usedQuestionIds.has(q.id));
+  // Filter questions by difficulty and availability
+  let availableQuestions = mockQuestions.filter(q => 
+    q.difficulty === difficulty && !usedQuestionIds.has(q.id)
+  );
   
-  // If we've used all questions, reset the pool but shuffle it
+  // If we don't have enough unused questions of the target difficulty, 
+  // include other difficulties or reset the used questions
   if (availableQuestions.length < count) {
-    usedQuestionIds.clear();
-    availableQuestions = [...filteredQuestions];
+    console.log(`Not enough unused ${difficulty} questions, including other difficulties`);
+    
+    // Try to get more questions from other difficulties
+    const otherDifficultyQuestions = mockQuestions.filter(q => 
+      q.difficulty !== difficulty && !usedQuestionIds.has(q.id)
+    );
+    
+    availableQuestions = [...availableQuestions, ...otherDifficultyQuestions];
+    
+    // If still not enough, reset the used questions for this difficulty
+    if (availableQuestions.length < count) {
+      console.log('Resetting used questions to provide fresh content');
+      const resetQuestions = mockQuestions.filter(q => q.difficulty === difficulty);
+      availableQuestions = [...availableQuestions, ...resetQuestions];
+      
+      // Clear used IDs for this difficulty
+      mockQuestions.forEach(q => {
+        if (q.difficulty === difficulty) {
+          usedQuestionIds.delete(q.id);
+        }
+      });
+    }
   }
   
-  // Shuffle the available questions
+  // Shuffle and select questions
   const shuffled = [...availableQuestions].sort(() => Math.random() - 0.5);
-  
-  // Select unique questions
   const selectedQuestions = shuffled.slice(0, Math.min(count, shuffled.length)).map((question, index) => {
     // Mark this question as used
     usedQuestionIds.add(question.id);
@@ -174,23 +394,16 @@ export const generateMockQuiz = (difficulty: 'easy' | 'medium' | 'hard', count: 
     };
   });
   
-  // If we don't have enough questions of the specified difficulty, 
-  // fill with questions from other difficulties
-  if (selectedQuestions.length < count) {
-    const allOtherQuestions = mockQuestions
-      .filter(q => q.difficulty !== difficulty && !usedQuestionIds.has(q.id))
-      .sort(() => Math.random() - 0.5);
-    
-    const needed = count - selectedQuestions.length;
-    const additionalQuestions = allOtherQuestions.slice(0, needed).map((question, index) => {
-      usedQuestionIds.add(question.id);
-      return {
-        ...question,
-        id: `${Date.now()}-additional-${index}-${Math.random().toString(36).substr(2, 9)}`
-      };
+  // Save updated used questions
+  saveUsedQuestionIds(usedQuestionIds);
+  
+  // If we still don't have enough questions, pad with random ones
+  while (selectedQuestions.length < count && mockQuestions.length > 0) {
+    const randomQuestion = mockQuestions[Math.floor(Math.random() * mockQuestions.length)];
+    selectedQuestions.push({
+      ...randomQuestion,
+      id: `${Date.now()}-extra-${selectedQuestions.length}-${Math.random().toString(36).substr(2, 9)}`
     });
-    
-    selectedQuestions.push(...additionalQuestions);
   }
   
   return {

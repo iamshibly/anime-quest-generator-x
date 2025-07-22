@@ -6,9 +6,9 @@ interface QuestionBoxProps {
   question: Question;
   questionNumber: number;
   totalQuestions: number;
-  onAnswer: (answer: string | number) => void;
+  onAnswer: (answer: string | number | number[]) => void;
   isResultMode?: boolean;
-  userAnswer?: string | number;
+  userAnswer?: string | number | number[];
   showResult?: boolean;
 }
 
@@ -21,7 +21,7 @@ export const QuestionBox = ({
   userAnswer, 
   showResult = false 
 }: QuestionBoxProps) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | number>('');
+  const [selectedAnswer, setSelectedAnswer] = useState<string | number | number[]>('');
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   // Reset state when question changes
@@ -52,6 +52,9 @@ export const QuestionBox = ({
       case 'true-false': return '✅';
       case 'fill-blank': return '📝';
       case 'image-based': return '🖼️';
+      case 'multiple-select': return '☑️';
+      case 'ranking': return '📊';
+      case 'number': return '🔢';
       default: return '❓';
     }
   };
@@ -151,6 +154,141 @@ export const QuestionBox = ({
     );
   };
 
+  const renderMultipleSelect = () => {
+    const selectedArray = Array.isArray(selectedAnswer) ? selectedAnswer : [];
+    
+    return question.options?.map((option, index) => {
+      const isSelected = selectedArray.includes(index);
+      const isCorrect = Array.isArray(question.correctAnswer) && question.correctAnswer.includes(index);
+      const isUserAnswer = Array.isArray(userAnswer) && userAnswer.includes(index);
+      
+      let optionClass = 'quiz-option';
+      if (showResult) {
+        if (isCorrect) optionClass += ' correct';
+        else if (isUserAnswer && !isCorrect) optionClass += ' incorrect';
+      } else if (isSelected) {
+        optionClass += ' selected';
+      }
+
+      return (
+        <button
+          key={index}
+          className={optionClass}
+          onClick={() => {
+            if (!isResultMode && !hasSubmitted) {
+              const newSelected = [...selectedArray];
+              if (newSelected.includes(index)) {
+                newSelected.splice(newSelected.indexOf(index), 1);
+              } else {
+                newSelected.push(index);
+              }
+              setSelectedAnswer(newSelected);
+            }
+          }}
+          disabled={isResultMode || hasSubmitted}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className={`w-5 h-5 border-2 rounded flex items-center justify-center ${
+                isSelected ? 'bg-primary border-primary' : 'border-border'
+              }`}>
+                {isSelected && <span className="text-white text-xs">✓</span>}
+              </div>
+              <span className="text-left flex-1">{option}</span>
+            </div>
+            {showResult && (
+              <div className="ml-2">
+                {isCorrect && <CheckCircle className="w-5 h-5 text-success" />}
+                {isUserAnswer && !isCorrect && <XCircle className="w-5 h-5 text-danger" />}
+              </div>
+            )}
+          </div>
+        </button>
+      );
+    });
+  };
+
+  const renderRanking = () => {
+    const rankingArray = Array.isArray(selectedAnswer) ? selectedAnswer : [];
+    
+    return (
+      <div className="space-y-4">
+        <p className="text-sm text-muted-foreground">Drag to reorder or click to select position:</p>
+        <div className="space-y-2">
+          {question.options?.map((option, index) => {
+            const currentPosition = rankingArray.indexOf(index);
+            const displayPosition = currentPosition >= 0 ? currentPosition + 1 : '?';
+            
+            return (
+              <div
+                key={index}
+                className="p-3 rounded-xl border-2 border-border bg-card flex items-center justify-between hover:border-primary/50 transition-colors"
+              >
+                <span>{option}</span>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4].map((pos) => (
+                    <button
+                      key={pos}
+                      onClick={() => {
+                        if (!isResultMode && !hasSubmitted) {
+                          const newRanking = [...rankingArray];
+                          const currentPos = newRanking.indexOf(index);
+                          if (currentPos >= 0) newRanking.splice(currentPos, 1);
+                          newRanking.splice(pos - 1, 0, index);
+                          setSelectedAnswer(newRanking.slice(0, question.options?.length || 0));
+                        }
+                      }}
+                      disabled={isResultMode || hasSubmitted}
+                      className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-colors ${
+                        currentPosition === pos - 1
+                          ? 'bg-primary border-primary text-white'
+                          : 'border-border hover:border-primary'
+                      }`}
+                    >
+                      {pos}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {showResult && (
+          <div className="p-4 rounded-xl bg-success/10 border border-success">
+            <p className="text-success font-medium">Correct Order: {
+              Array.isArray(question.correctAnswer) && question.options
+                ? question.correctAnswer.map(idx => question.options![idx]).join(' → ')
+                : 'N/A'
+            }</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderNumber = () => {
+    return (
+      <div className="space-y-4">
+        <input
+          type="number"
+          className="w-full p-4 rounded-xl border-2 border-border bg-input text-foreground focus:border-primary focus:outline-none transition-colors"
+          placeholder="Enter your answer..."
+          value={selectedAnswer as number || ''}
+          onChange={(e) => !isResultMode && !hasSubmitted && setSelectedAnswer(parseInt(e.target.value) || 0)}
+          disabled={isResultMode || hasSubmitted}
+        />
+        {showResult && (
+          <div className="p-4 rounded-xl bg-success/10 border border-success">
+            <p className="text-success font-medium">Correct Answer: {question.correctAnswer}</p>
+            {userAnswer && (
+              <p className="text-muted-foreground">Your Answer: {userAnswer}</p>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="card-anime">
       {/* Question Header */}
@@ -191,6 +329,9 @@ export const QuestionBox = ({
         {question.type === 'mcq' && renderMCQOptions()}
         {question.type === 'true-false' && renderTrueFalse()}
         {question.type === 'fill-blank' && renderFillInBlank()}
+        {question.type === 'multiple-select' && renderMultipleSelect()}
+        {question.type === 'ranking' && renderRanking()}
+        {question.type === 'number' && renderNumber()}
       </div>
 
       {/* Submit Button */}
@@ -198,7 +339,11 @@ export const QuestionBox = ({
         <button
           className="btn-anime w-full disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleSubmit}
-          disabled={selectedAnswer === ''}
+          disabled={
+            selectedAnswer === '' || 
+            (Array.isArray(selectedAnswer) && selectedAnswer.length === 0) ||
+            (question.type === 'ranking' && Array.isArray(selectedAnswer) && selectedAnswer.length !== question.options?.length)
+          }
         >
           Submit Answer
         </button>

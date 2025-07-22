@@ -1,10 +1,10 @@
 export interface Question {
   id: string;
-  type: 'mcq' | 'true-false' | 'fill-blank' | 'image-based';
+  type: 'mcq' | 'true-false' | 'fill-blank' | 'image-based' | 'multiple-select' | 'ranking' | 'number';
   difficulty: 'easy' | 'medium' | 'hard';
   question: string;
   options?: string[];
-  correctAnswer: string | number;
+  correctAnswer: string | number | number[];
   explanation?: string;
   imageUrl?: string;
   timeLimit: number; // in seconds
@@ -26,7 +26,7 @@ export interface QuizResult {
   timeTaken: number;
   answers: Array<{
     questionId: string;
-    userAnswer: string | number;
+    userAnswer: string | number | number[];
     isCorrect: boolean;
   }>;
   completedAt: Date;

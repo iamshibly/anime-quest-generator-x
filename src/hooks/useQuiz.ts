@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 export const useQuiz = () => {
   const [currentQuiz, setCurrentQuiz] = useState<Quiz | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState<Array<string | number>>([]);
+  const [userAnswers, setUserAnswers] = useState<Array<string | number | number[]>>([]);
   const [isQuizActive, setIsQuizActive] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
@@ -54,7 +54,7 @@ export const useQuiz = () => {
     }
   }, []);
 
-  const submitAnswer = useCallback((answer: string | number) => {
+  const submitAnswer = useCallback((answer: string | number | number[]) => {
     if (!currentQuiz || !isQuizActive) return;
 
     const newAnswers = [...userAnswers];
@@ -69,7 +69,7 @@ export const useQuiz = () => {
     }
   }, [currentQuiz, currentQuestionIndex, userAnswers, isQuizActive]);
 
-  const finishQuiz = useCallback((answers: Array<string | number> = userAnswers) => {
+  const finishQuiz = useCallback((answers: Array<string | number | number[]> = userAnswers) => {
     if (!currentQuiz) return;
 
     setIsQuizActive(false);
@@ -77,7 +77,21 @@ export const useQuiz = () => {
     let score = 0;
     const resultAnswers = currentQuiz.questions.map((question, index) => {
       const userAnswer = answers[index];
-      const isCorrect = userAnswer === question.correctAnswer;
+      let isCorrect = false;
+      
+      // Handle different question types for correctness checking
+      if (question.type === 'multiple-select' || question.type === 'ranking') {
+        // For array answers, check if arrays match exactly
+        const correctAnswer = question.correctAnswer as number[];
+        const userAnswerArray = userAnswer as number[];
+        isCorrect = Array.isArray(correctAnswer) && Array.isArray(userAnswerArray) &&
+          correctAnswer.length === userAnswerArray.length &&
+          correctAnswer.every((val, idx) => val === userAnswerArray[idx]);
+      } else {
+        // For single value answers
+        isCorrect = userAnswer === question.correctAnswer;
+      }
+      
       if (isCorrect) score++;
       
       return {

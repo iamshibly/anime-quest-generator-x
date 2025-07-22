@@ -6,6 +6,18 @@ export const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState<User[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
+  // Bot users for populating leaderboard
+  const botUsers: User[] = [
+    { id: 'bot-1', name: 'OtakuMaster', totalXP: 15420, quizzesCompleted: 87, averageScore: 94.5, rank: 1 },
+    { id: 'bot-2', name: 'AnimeExpert', totalXP: 12850, quizzesCompleted: 76, averageScore: 91.2, rank: 2 },
+    { id: 'bot-3', name: 'MangaKing', totalXP: 10950, quizzesCompleted: 63, averageScore: 88.7, rank: 3 },
+    { id: 'bot-4', name: 'TokyoFan', totalXP: 8750, quizzesCompleted: 52, averageScore: 85.3, rank: 4 },
+    { id: 'bot-5', name: 'NinjaWiz', totalXP: 7320, quizzesCompleted: 41, averageScore: 82.1, rank: 5 },
+    { id: 'bot-6', name: 'DragonSlayer', totalXP: 6180, quizzesCompleted: 38, averageScore: 79.4, rank: 6 },
+    { id: 'bot-7', name: 'PirateKing', totalXP: 5440, quizzesCompleted: 33, averageScore: 76.8, rank: 7 },
+    { id: 'bot-8', name: 'ShinigamiX', totalXP: 4670, quizzesCompleted: 29, averageScore: 74.2, rank: 8 }
+  ];
+
   useEffect(() => {
     loadLeaderboard();
     loadCurrentUser();
@@ -17,9 +29,19 @@ export const Leaderboard = () => {
 
   const loadLeaderboard = () => {
     const data = localStorage.getItem('leaderboard');
-    if (data) {
-      setLeaderboard(JSON.parse(data));
-    }
+    let realUsers: User[] = data ? JSON.parse(data) : [];
+    
+    // Merge real users with bot users and sort by XP
+    const combinedUsers = [...realUsers, ...botUsers]
+      .sort((a, b) => b.totalXP - a.totalXP)
+      .slice(0, 10); // Top 10 only
+    
+    // Update ranks
+    combinedUsers.forEach((user, index) => {
+      user.rank = index + 1;
+    });
+    
+    setLeaderboard(combinedUsers);
   };
 
   const loadCurrentUser = () => {
@@ -107,48 +129,59 @@ export const Leaderboard = () => {
         {leaderboard.length === 0 ? (
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🏆</div>
-            <p className="text-muted-foreground">No players yet!</p>
-            <p className="text-sm text-muted-foreground">Be the first to complete a quiz and claim the top spot!</p>
+            <p className="text-muted-foreground">Loading leaderboard...</p>
+            <p className="text-sm text-muted-foreground">Compete with other anime fans!</p>
           </div>
         ) : (
-          leaderboard.map((user, index) => (
-            <div
-              key={user.id}
-              className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
-                user.id === currentUser?.id
-                  ? 'border-primary bg-primary/10 shadow-lg'
-                  : 'border-border bg-card hover:border-primary/50'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${getRankBadge(user.rank)}`}>
-                    {user.rank <= 3 ? getRankIcon(user.rank) : <span className="font-bold text-sm">#{user.rank}</span>}
-                  </div>
+          leaderboard.map((user, index) => {
+            const isCurrentUser = user.id === currentUser?.id;
+            const isBot = user.id.startsWith('bot-');
+            
+            return (
+              <div
+                key={user.id}
+                className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                  isCurrentUser
+                    ? 'border-primary bg-primary/10 shadow-lg'
+                    : 'border-border bg-card hover:border-primary/50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">
-                        {user.name.charAt(0).toUpperCase()}
-                      </span>
+                    <div className={`flex items-center justify-center w-8 h-8 rounded-full ${getRankBadge(user.rank)}`}>
+                      {user.rank <= 3 ? getRankIcon(user.rank) : <span className="font-bold text-sm">#{user.rank}</span>}
                     </div>
-                    <div>
-                      <h3 className="font-bold">{user.name}</h3>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span>🎯 {user.quizzesCompleted} quizzes</span>
-                        <span>📊 {user.averageScore.toFixed(1)}% avg</span>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        isBot ? 'bg-gradient-to-r from-secondary to-accent' : 'bg-gradient-to-r from-primary to-secondary'
+                      }`}>
+                        <span className="text-white font-bold text-sm">
+                          {user.name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold">{user.name}</h3>
+                          {isBot && <span className="text-xs bg-muted px-2 py-1 rounded-full">BOT</span>}
+                          {isCurrentUser && <span className="text-xs bg-primary px-2 py-1 rounded-full text-white">YOU</span>}
+                        </div>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <span>🎯 {user.quizzesCompleted} quizzes</span>
+                          <span>📊 {user.averageScore.toFixed(1)}% avg</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 <div className="text-right">
                   <div className="text-xl font-bold text-primary">
                     {formatXP(user.totalXP)}
                   </div>
                   <div className="text-sm text-muted-foreground">XP</div>
                 </div>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
 
