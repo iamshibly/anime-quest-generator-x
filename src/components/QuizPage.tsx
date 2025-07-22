@@ -43,6 +43,11 @@ export const QuizPage = () => {
     setCurrentView('menu');
   };
 
+  const handleBackToMenu = () => {
+    resetQuiz();
+    setCurrentView('menu');
+  };
+
   const handleNewQuiz = (difficulty: 'easy' | 'medium' | 'hard') => {
     resetQuiz();
     handleStartQuiz(difficulty);
@@ -318,13 +323,26 @@ export const QuizPage = () => {
   if (currentView === 'results' && quizResult && currentQuiz) {
     return (
       <div className="min-h-screen bg-background">
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <ResultDisplay
-            result={quizResult}
-            quiz={currentQuiz}
-            onRetry={handleRetry}
-            onNewQuiz={handleNewQuiz}
-          />
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Results */}
+            <div className="lg:col-span-2">
+              <ResultDisplay
+                result={quizResult}
+                quiz={currentQuiz}
+                onRetry={handleRetry}
+                onNewQuiz={handleNewQuiz}
+                onBackToMenu={handleBackToMenu}
+              />
+            </div>
+            
+            {/* Sidebar with Leaderboard and XP */}
+            <div className="space-y-6">
+              <XPTracker />
+              <Leaderboard />
+              <APIStatusIndicator />
+            </div>
+          </div>
         </div>
       </div>
     );

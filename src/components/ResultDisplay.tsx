@@ -1,14 +1,15 @@
 import { QuizResult, Quiz } from '../types/quiz';
-import { Trophy, Target, Clock, RotateCcw, ArrowRight } from 'lucide-react';
+import { Trophy, Target, Clock, RotateCcw, ArrowRight, Home } from 'lucide-react';
 
 interface ResultDisplayProps {
   result: QuizResult;
   quiz: Quiz;
   onRetry: () => void;
   onNewQuiz: (difficulty: 'easy' | 'medium' | 'hard') => void;
+  onBackToMenu: () => void;
 }
 
-export const ResultDisplay = ({ result, quiz, onRetry, onNewQuiz }: ResultDisplayProps) => {
+export const ResultDisplay = ({ result, quiz, onRetry, onNewQuiz, onBackToMenu }: ResultDisplayProps) => {
   const scorePercentage = (result.score / result.totalQuestions) * 100;
 
   const getScoreColor = () => {
@@ -102,6 +103,13 @@ export const ResultDisplay = ({ result, quiz, onRetry, onNewQuiz }: ResultDispla
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={onBackToMenu}
+            className="btn-secondary-anime flex items-center justify-center gap-2"
+          >
+            <Home className="w-4 h-4" />
+            Back to Menu
+          </button>
           <button
             onClick={onRetry}
             className="btn-secondary-anime flex items-center justify-center gap-2"
