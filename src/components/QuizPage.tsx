@@ -275,18 +275,18 @@ export const QuizPage = () => {
           <div className="mt-12">
             <div className="card-anime">
               <h3 className="text-2xl font-bold mb-6 text-center">🎥 Anime Quiz Experience</h3>
-              <div className="flex justify-center">
-                <iframe 
-                  width="560" 
-                  height="315" 
-                  src="https://www.youtube.com/embed/iutpJ5ji268?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&showinfo=0&rel=0&playlist=iutpJ5ji268" 
-                  title="Anime Quiz Background Video" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  referrerPolicy="strict-origin-when-cross-origin" 
-                  allowFullScreen
-                  className="rounded-lg max-w-full"
-                />
+              <div className="flex justify-center max-w-2xl mx-auto">
+                <div style={{position:"relative", width:"100%", height:"0px", paddingBottom:"56.250%"}}>
+                  <iframe 
+                    allow="fullscreen;autoplay" 
+                    allowFullScreen 
+                    height="100%" 
+                    src="https://streamable.com/e/6byo68?autoplay=1&muted=1" 
+                    width="100%" 
+                    style={{border:"none", width:"100%", height:"100%", position:"absolute", left:"0px", top:"0px", overflow:"hidden"}}
+                    className="rounded-lg"
+                  />
+                </div>
               </div>
             </div>
           </div>
