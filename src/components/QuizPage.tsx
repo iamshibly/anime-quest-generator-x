@@ -271,6 +271,25 @@ export const QuizPage = () => {
               </div>
             </div>
           </div>
+          {/* YouTube Video Section */}
+          <div className="mt-12">
+            <div className="card-anime">
+              <h3 className="text-2xl font-bold mb-6 text-center">🎥 Anime Quiz Tutorial</h3>
+              <div className="flex justify-center">
+                <iframe 
+                  width="560" 
+                  height="315" 
+                  src="https://www.youtube.com/embed/iutpJ5ji268?si=xI7NHR70slqzs0sf" 
+                  title="YouTube video player" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                  className="rounded-lg max-w-full"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
