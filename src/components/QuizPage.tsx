@@ -100,7 +100,22 @@ export const QuizPage = () => {
   // Menu View
   if (currentView === 'menu') {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background relative overflow-hidden">
+        {/* Background Video */}
+        <div className="fixed inset-0 w-full h-full z-0">
+          <div style={{position:"absolute", width:"100%", height:"100%", top:"0", left:"0"}}>
+            <iframe 
+              allow="autoplay" 
+              height="100%" 
+              src="https://streamable.com/e/6byo68?autoplay=1&muted=1&loop=1" 
+              width="100%" 
+              style={{border:"none", width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none"}}
+            />
+          </div>
+        </div>
+        
+        {/* Content Overlay */}
+        <div className="relative z-10 bg-background/80 backdrop-blur-sm min-h-screen">
         {/* Header */}
         <header className="border-b border-border">
           <div className="max-w-7xl mx-auto px-4 py-6">
@@ -271,25 +286,7 @@ export const QuizPage = () => {
               </div>
             </div>
           </div>
-          {/* Background Video Section */}
-          <div className="mt-12">
-            <div className="card-anime">
-              <h3 className="text-2xl font-bold mb-6 text-center">🎥 Anime Quiz Experience</h3>
-              <div className="flex justify-center max-w-2xl mx-auto">
-                <div style={{position:"relative", width:"100%", height:"0px", paddingBottom:"56.250%"}}>
-                  <iframe 
-                    allow="fullscreen;autoplay" 
-                    allowFullScreen 
-                    height="100%" 
-                    src="https://streamable.com/e/6byo68?autoplay=1&muted=1" 
-                    width="100%" 
-                    style={{border:"none", width:"100%", height:"100%", position:"absolute", left:"0px", top:"0px", overflow:"hidden"}}
-                    className="rounded-lg"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
         </div>
       </div>
     );
@@ -298,7 +295,22 @@ export const QuizPage = () => {
   // Quiz View
   if (currentView === 'quiz' && currentQuiz && currentQuestion) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background relative overflow-hidden">
+        {/* Background Video */}
+        <div className="fixed inset-0 w-full h-full z-0">
+          <div style={{position:"absolute", width:"100%", height:"100%", top:"0", left:"0"}}>
+            <iframe 
+              allow="autoplay" 
+              height="100%" 
+              src="https://streamable.com/e/6byo68?autoplay=1&muted=1&loop=1" 
+              width="100%" 
+              style={{border:"none", width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none"}}
+            />
+          </div>
+        </div>
+        
+        {/* Content Overlay */}
+        <div className="relative z-10 bg-background/80 backdrop-blur-sm min-h-screen">
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="mb-6">
             <div className="flex items-center justify-between mb-4">
@@ -334,6 +346,7 @@ export const QuizPage = () => {
             onAnswer={handleAnswerSubmit}
           />
         </div>
+        </div>
       </div>
     );
   }
@@ -341,7 +354,22 @@ export const QuizPage = () => {
   // Results View
   if (currentView === 'results' && quizResult && currentQuiz) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background relative overflow-hidden">
+        {/* Background Video */}
+        <div className="fixed inset-0 w-full h-full z-0">
+          <div style={{position:"absolute", width:"100%", height:"100%", top:"0", left:"0"}}>
+            <iframe 
+              allow="autoplay" 
+              height="100%" 
+              src="https://streamable.com/e/6byo68?autoplay=1&muted=1&loop=1" 
+              width="100%" 
+              style={{border:"none", width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none"}}
+            />
+          </div>
+        </div>
+        
+        {/* Content Overlay */}
+        <div className="relative z-10 bg-background/80 backdrop-blur-sm min-h-screen">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Results */}
@@ -362,6 +390,7 @@ export const QuizPage = () => {
               <APIStatusIndicator />
             </div>
           </div>
+        </div>
         </div>
       </div>
     );
